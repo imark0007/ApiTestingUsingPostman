@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "2a66d26b-cdeb-415c-9194-da9174aa04e7",
+		"name": "theTestingWorldApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32181763",
+		"_collection_link": "https://speeding-astronaut-45664.postman.co/workspace/3eeb8a22-d741-4354-8b16-da1c558fd1e7/collection/32181763-2a66d26b-cdeb-415c-9194-da9174aa04e7?action=share&source=collection_link&creator=32181763"
+	},
+	"item": [
+		{
+			"name": "Create_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"\r",
+							"pm.environment.set('id',jsonData.id)\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var first_name = pm.variables.replaceIn('{{$randomFirstName}}')\r",
+							"\r",
+							"console.log(first_name)\r",
+							"pm.environment.set('firstName', first_name)\r",
+							"\r",
+							"var middle_name = pm.variables.replaceIn('{{$randomFirstName}}')\r",
+							"\r",
+							"console.log(middle_name)\r",
+							"pm.environment.set('middleName', middle_name)\r",
+							"\r",
+							"var last_name = pm.variables.replaceIn('{{$randomLastName}}')\r",
+							"\r",
+							"console.log(last_name)\r",
+							"pm.environment.set('lastName', last_name)\r",
+							"\r",
+							"var date_of_birth = pm.variables.replaceIn('{{$randomDatePast}}')\r",
+							"\r",
+							"console.log(date_of_birth)\r",
+							"pm.environment.set('dateOfBirth', date_of_birth)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"first_name\": \"{{firstName}}\", \r\n\"middle_name\": \"{{middleName}}\", \r\n\"last_name\": \"{{lastName}}\", \r\n\"date_of_birth\": \"{{dateOfBirth}}\" \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var statusCode = pm.response.code\r",
+							"console.log(statusCode)\r",
+							"\r",
+							"switch(statusCode){\r",
+							"\r",
+							"    case 200:\r",
+							"\r",
+							"            var jsonData = pm.response.json()\r",
+							"\r",
+							"            pm.test(\"Status code is 200\", function () {\r",
+							"                pm.response.to.have.status(200);\r",
+							"            });\r",
+							"            \r",
+							"        break;\r",
+							"\r",
+							"    case 404:\r",
+							"        pm.test('Not Found')\r",
+							"        break;\r",
+							"    case 500:\r",
+							"        pm.test('Internal Server Error')  \r",
+							"        break;  \r",
+							"}\r",
+							"console.log(jsonData.length)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				},
+				"description": "Response:\n\n\\[  \n{  \n\"id\": 10093928,  \n\"first_name\": \"Lindsay\",  \n\"middle_name\": \"Jeromy\",  \n\"last_name\": \"Stroman\",  \n\"date_of_birth\": \"Sun Nov 12 2023 07:13:02 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093927,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093926,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093925,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093924,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093923,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Jan\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093922,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093921,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093920,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093919,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093918,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093917,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093916,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093915,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093914,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093913,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093912,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093911,  \n\"first_name\": \"sample string 25\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093910,  \n\"first_name\": \"Mireille\",  \n\"middle_name\": \"Alden\",  \n\"last_name\": \"Kulas\",  \n\"date_of_birth\": \"Wed May 24 2023 06:53:33 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093909,  \n\"first_name\": \"Trinity\",  \n\"middle_name\": \"Rohan\",  \n\"last_name\": \"Reynolds\",  \n\"date_of_birth\": \"19/03/2024\"  \n},  \n{  \n\"id\": 10093908,  \n\"first_name\": \"Chanel\",  \n\"middle_name\": \"Reilly\",  \n\"last_name\": \"Balistreri\",  \n\"date_of_birth\": \"19/03/2024\"  \n},  \n{  \n\"id\": 10093907,  \n\"first_name\": \"Pat\",  \n\"middle_name\": \"Romaguera\",  \n\"last_name\": \"Rempel\",  \n\"date_of_birth\": \"19-03-2024\"  \n},  \n{  \n\"id\": 10093906,  \n\"first_name\": \"Clark\",  \n\"middle_name\": \"Connelly\",  \n\"last_name\": \"Abbott\",  \n\"date_of_birth\": \"19-03-2024\"  \n},  \n{  \n\"id\": 10093905,  \n\"first_name\": \"Megane\",  \n\"middle_name\": \"Rupert\",  \n\"last_name\": \"Frami\",  \n\"date_of_birth\": \"Wed Jul 12 2023 09:59:58 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093904,  \n\"first_name\": \"Leatha\",  \n\"middle_name\": \"Khalid\",  \n\"last_name\": \"Howell\",  \n\"date_of_birth\": \"Tue Oct 03 2023 16:27:00 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093903,  \n\"first_name\": \"Era\",  \n\"middle_name\": \"Dare\",  \n\"last_name\": \"Haag\",  \n\"date_of_birth\": \"2024-03-19\"  \n},  \n{  \n\"id\": 10093902,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093901,  \n\"first_name\": \"Virginia\",  \n\"middle_name\": \"Holden\",  \n\"last_name\": \"Lakin\",  \n\"date_of_birth\": \"Thu Aug 10 2023 06:20:16 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093900,  \n\"first_name\": \"Jazlyn\",  \n\"middle_name\": \"Travon\",  \n\"last_name\": \"Murphy\",  \n\"date_of_birth\": \"Sat Nov 04 2023 09:28:03 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093899,  \n\"first_name\": \"Jone\",  \n\"middle_name\": \"Doe\",  \n\"last_name\": \"Kowaliski\",  \n\"date_of_birth\": \"10/10/2000\"  \n},  \n{  \n\"id\": 10093898,  \n\"first_name\": \"Brandon\",  \n\"middle_name\": \"Trey\",  \n\"last_name\": \"Weissnat\",  \n\"date_of_birth\": \"Thu Jul 27 2023 06:22:50 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093897,  \n\"first_name\": \"Trudie\",  \n\"middle_name\": \"Halie\",  \n\"last_name\": \"Muller\",  \n\"date_of_birth\": \"Sat May 20 2023 15:08:22 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093896,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093895,  \n\"first_name\": \"Katrine\",  \n\"middle_name\": \"Jed\",  \n\"last_name\": \"Lehner\",  \n\"date_of_birth\": \"Tue Jan 02 2024 20:55:32 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093894,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093893,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093892,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093891,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093890,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093889,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093888,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093887,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093886,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093885,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093884,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093883,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093882,  \n\"first_name\": \"Aron\",  \n\"middle_name\": \"Denis\",  \n\"last_name\": \"Yundt\",  \n\"date_of_birth\": \"Sat May 27 2023 05:08:12 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093881,  \n\"first_name\": \"Francisca\",  \n\"middle_name\": \"Odie\",  \n\"last_name\": \"Rosenbaum\",  \n\"date_of_birth\": \"Tue Oct 31 2023 22:41:25 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093880,  \n\"first_name\": \"Rubye\",  \n\"middle_name\": \"Frieda\",  \n\"last_name\": \"McDermott\",  \n\"date_of_birth\": \"Sat Mar 18 2023 21:27:45 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093879,  \n\"first_name\": \"Obie\",  \n\"middle_name\": \"Ian\",  \n\"last_name\": \"Zboncak\",  \n\"date_of_birth\": \"Mon Nov 27 2023 06:14:35 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093878,  \n\"first_name\": \"Neal\",  \n\"middle_name\": \"Olen\",  \n\"last_name\": \"Miller\",  \n\"date_of_birth\": \"Mon Jan 22 2024 01:13:45 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093877,  \n\"first_name\": \"Stephania\",  \n\"middle_name\": \"Gino\",  \n\"last_name\": \"Shanahan\",  \n\"date_of_birth\": \"Tue Sep 26 2023 09:18:21 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093876,  \n\"first_name\": \"Arlo\",  \n\"middle_name\": \"Collin\",  \n\"last_name\": \"Rogahn\",  \n\"date_of_birth\": \"Sat Feb 24 2024 18:29:52 GMT+0600 (Bangladesh Standard Time)\"  \n},  \n{  \n\"id\": 10093875,  \n\"first_name\": \"Zack\",  \n\"middle_name\": \"Jayme\",  \n\"last_name\": \"Walter\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093874,  \n\"first_name\": \"Newell\",  \n\"middle_name\": \"Isabelle\",  \n\"last_name\": \"Davis\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093873,  \n\"first_name\": \"Charley\",  \n\"middle_name\": \"Ezra\",  \n\"last_name\": \"Larson\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093872,  \n\"first_name\": \"Katlynn\",  \n\"middle_name\": \"Thomas\",  \n\"last_name\": \"Schroeder\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093871,  \n\"first_name\": \"Veronica\",  \n\"middle_name\": \"Kenyatta\",  \n\"last_name\": \"Thu Nov 09 2023 02:10:26 GMT+0600 (Bangladesh Standard Time)\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093870,  \n\"first_name\": \"Ronaldo\",  \n\"middle_name\": \"Corene\",  \n\"last_name\": \"Ward\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093869,  \n\"first_name\": \"Ernestine\",  \n\"middle_name\": \"Jany\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093868,  \n\"first_name\": \"Gabriel\",  \n\"middle_name\": \"Katheryn\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093867,  \n\"first_name\": \"Katelin\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093866,  \n\"first_name\": \"Sherwood\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093865,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093864,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Jan\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093863,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093862,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093861,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093860,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093859,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093858,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093857,  \n\"first_name\": \"sample string 2\",  \n\"middle_name\": \"sample string 3\",  \n\"last_name\": \"sample string 4\",  \n\"date_of_birth\": \"sample string 5\"  \n},  \n{  \n\"id\": 10093856,  \n\"first_name\": \"First Name\",  \n\"middle_name\": \"Middle Name\",  \n\"last_name\": \"Last Nam\",  \n\"date_of_birth\": \"11/11/1980\"  \n},  \n{  \n\"id\": 10093855,  \n\"first_name\": \"Jolie\",  \n\"middle_name\": \"Anna\",  \n\"last_name\": \"Camila\",  \n\"date_of_birth\": \"01/01/1950\"  \n},  \n{  \n\"id\": 10093854,  \n\"first_name\": \"First Name\",  \n\"middle_name\": \"Middle Name\",  \n\"last_name\": \"Last Nam\",  \n\"date_of_birth\": \"11/11/1980\"  \n},  \n{  \n\"id\": 10093853,  \n\"first_name\": \"Jolie\",  \n\"middle_name\": \"Anna\",  \n\"last_name\": \"Camila\",  \n\"date_of_birth\": \"01/01/1950\"  \n},  \n{  \n\"id\": 10093852,  \n\"first_name\": \"Jone\",  \n\"middle_name\": \"Doe\",  \n\"last_name\": \"Kowaliski\",  \n\"date_of_birth\": \"10/10/2000\"  \n},  \n{  \n\"id\": 10093851,  \n\"first_name\": \"Janusz\",  \n\"middle_name\": \"Karol\",  \n\"last_name\": \"Stuhr\",  \n\"date_of_birth\": \"01/01/1981\"  \n},  \n{  \n\"id\": 10093850,  \n\"first_name\": \"Jone\",  \n\"middle_name\": \"Doe\",  \n\"last_name\": \"Kowaliski\",  \n\"date_of_birth\": \"10/10/2000\"  \n},  \n{  \n\"id\": 10093849,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Jan\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093848,  \n\"first_name\": \"Anne\",  \n\"middle_name\": \"Maria\",  \n\"last_name\": \"Hathaway\",  \n\"date_of_birth\": \"01/01/1980\"  \n},  \n{  \n\"id\": 10093847,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Marek\",  \n\"last_name\": \"Tomek\",  \n\"date_of_birth\": \"01/01/2020\"  \n},  \n{  \n\"id\": 10093846,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Marek\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093845,  \n\"first_name\": \"Jone\",  \n\"middle_name\": \"Doe\",  \n\"last_name\": \"Kowaliski\",  \n\"date_of_birth\": \"10/10/2000\"  \n},  \n{  \n\"id\": 10093844,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Jan\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093843,  \n\"first_name\": \"Aleks\",  \n\"middle_name\": \"Olek\",  \n\"last_name\": \"Duzy\",  \n\"date_of_birth\": \"30/01/2013\"  \n},  \n{  \n\"id\": 10093842,  \n\"first_name\": \"First Name\",  \n\"middle_name\": \"Middle Name\",  \n\"last_name\": \"Last Nam\",  \n\"date_of_birth\": \"11/11/1980\"  \n},  \n{  \n\"id\": 10093841,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Jan\",  \n\"last_name\": \"Las\",  \n\"date_of_birth\": \"01/10/2000\"  \n},  \n{  \n\"id\": 10093840,  \n\"first_name\": \"Anne\",  \n\"middle_name\": \"Maria\",  \n\"last_name\": \"Hathaway\",  \n\"date_of_birth\": \"01/01/1980\"  \n},  \n{  \n\"id\": 10093839,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Marek\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093838,  \n\"first_name\": \"Janusz\",  \n\"middle_name\": \"Karol\",  \n\"last_name\": \"Stuhr\",  \n\"date_of_birth\": \"01/01/1981\"  \n},  \n{  \n\"id\": 10093837,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Malysz\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"04/03/1985\"  \n},  \n{  \n\"id\": 10093836,  \n\"first_name\": \"Kuba\",  \n\"middle_name\": \"Luigi\",  \n\"last_name\": \"Obro\",  \n\"date_of_birth\": \"12/13/1995\"  \n},  \n{  \n\"id\": 10093835,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Marek\",  \n\"last_name\": \"Tomek\",  \n\"date_of_birth\": \"01/01/2020\"  \n},  \n{  \n\"id\": 10093834,  \n\"first_name\": \"Jolie\",  \n\"middle_name\": \"Anna\",  \n\"last_name\": \"Camila\",  \n\"date_of_birth\": \"01/01/1950\"  \n},  \n{  \n\"id\": 10093833,  \n\"first_name\": \"Janusz\",  \n\"middle_name\": \"Karol\",  \n\"last_name\": \"Stuhr\",  \n\"date_of_birth\": \"01/01/1981\"  \n},  \n{  \n\"id\": 10093832,  \n\"first_name\": \"Kuba\",  \n\"middle_name\": \"Luigi\",  \n\"last_name\": \"Obro\",  \n\"date_of_birth\": \"12/13/1995\"  \n},  \n{  \n\"id\": 10093831,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Jan\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"01/01/2000\"  \n},  \n{  \n\"id\": 10093830,  \n\"first_name\": \"Adam\",  \n\"middle_name\": \"Malysz\",  \n\"last_name\": \"Nowak\",  \n\"date_of_birth\": \"04/03/1985\"  \n},  \n{  \n\"id\": 10093829,  \n\"first_name\": \"Jone\",  \n\"middle_name\": \"Doe\",  \n\"last_name\": \"Kowaliski\",  \n\"date_of_birth\": \"10/10/2000\"  \n}  \n\\]"
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Specific_Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var statusCode = pm.response.code\r",
+							"console.log(statusCode)\r",
+							"\r",
+							"switch(statusCode){\r",
+							"\r",
+							"    case 200:\r",
+							"        var jsonData = pm.response.json()\r",
+							"            pm.test(\"Status code is 200\", function () {\r",
+							"                pm.response.to.have.status(200);\r",
+							"            });\r",
+							"\r",
+							"            pm.test('ID Field Value Validation', function(){\r",
+							"\r",
+							"            pm.expect(jsonData.data.id).to.eql(pm.environment.get('id'))\r",
+							"            })\r",
+							"             pm.test('First Name Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.first_name).to.eql(pm.environment.get('firstName'))\r",
+							"            })\r",
+							"\r",
+							"            pm.test('Middle Name Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.middle_name).to.eql(pm.environment.get('middleName'))\r",
+							"            })\r",
+							"\r",
+							"            pm.test('Last Name Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.last_name).to.eql(pm.environment.get('lastName'))\r",
+							"            })\r",
+							"\r",
+							"            pm.test('Date of Birth Field Value Validation', function (){\r",
+							"                pm.expect(jsonData.data.date_of_birth.toString()).to.eql(pm.environment.get('dateOfBirth'))\r",
+							"            })\r",
+							"\r",
+							"        break;\r",
+							"\r",
+							"    case 404:\r",
+							"        pm.test('Not Found')\r",
+							"        break;\r",
+							"    case 500:\r",
+							"        pm.test('Internal Server Error')  \r",
+							"        break;  \r",
+							"}\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				},
+				"description": "{  \n\"status\": \"true\",  \n\"data\": {  \n\"id\": 10093928,  \n\"first_name\": \"Lindsay\",  \n\"middle_name\": \"Jeromy\",  \n\"last_name\": \"Stroman\",  \n\"date_of_birth\": \"Sun Nov 12 2023 07:13:02 GMT+0600 (Bangladesh Standard Time)\"  \n}  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Technical_Skills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var statusCode = pm.response.code\r",
+							"console.log(statusCode)\r",
+							"\r",
+							"switch(statusCode){\r",
+							"\r",
+							"    case 200:\r",
+							"\r",
+							"            var jsonData = pm.response.json()\r",
+							"\r",
+							"            pm.test(\"Status code is 200\", function () {\r",
+							"                pm.response.to.have.status(200);\r",
+							"            });\r",
+							"            \r",
+							"        break;\r",
+							"\r",
+							"    case 404:\r",
+							"        pm.test('Not Found')\r",
+							"        break;\r",
+							"    case 500:\r",
+							"        pm.test('Internal Server Error')  \r",
+							"        break;  \r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var language = pm.variables.replaceIn('{{$randomLocale}}')\r",
+							"\r",
+							"console.log(language)\r",
+							"pm.environment.set('language', language)\r",
+							"var language = pm.variables.replaceIn('{{$randomLocale}}')\r",
+							"\r",
+							"console.log(language)\r",
+							"pm.environment.set('language2', language)\r",
+							"\r",
+							"var yearexp = pm.variables.replaceIn('{{$randomInt}}')\r",
+							"\r",
+							"console.log(yearexp)\r",
+							"pm.environment.set('yearofexp', yearexp)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"id\": 1, \r\n\"language\": [ \r\n\"{{language}}\", \r\n\"{{language2}}\" \r\n], \r\n\"yearexp\": \"{{yearofexp}}\", \r\n\"lastused\": \"sample string 3\", \r\n\"st_id\": {{id}} \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/technicalskills",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"technicalskills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Student_Address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var statusCode = pm.response.code\r",
+							"console.log(statusCode)\r",
+							"\r",
+							"switch(statusCode){\r",
+							"\r",
+							"    case 200:\r",
+							"\r",
+							"            var jsonData = pm.response.json()\r",
+							"\r",
+							"            pm.test(\"Status code is 200\", function () {\r",
+							"                pm.response.to.have.status(200);\r",
+							"            });\r",
+							"    \r",
+							"            pm.test(\"Status Field Value Validation\", function () {\r",
+							"\r",
+							"            pm.expect('true').to.equal(jsonData.status);\r",
+							"    });\r",
+							"            pm.test(\"Message Field Value Validation\", function () {\r",
+							"\r",
+							"            pm.expect('Add  data success').to.equal(jsonData.msg);\r",
+							"    });\r",
+							"            \r",
+							"        break;\r",
+							"\r",
+							"    case 404:\r",
+							"        pm.test('Not Found')\r",
+							"        break;\r",
+							"    case 500:\r",
+							"        pm.test('Internal Server Error')  \r",
+							"        break;  \r",
+							"}\r",
+							"    \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var House_Number = pm.variables.replaceIn('{{$randomInt}}')\r",
+							"\r",
+							"console.log(House_Number)\r",
+							"pm.environment.set('House_Number', House_Number)\r",
+							"\r",
+							"var City = pm.variables.replaceIn('{{$randomCity}}')\r",
+							"\r",
+							"console.log(City)\r",
+							"pm.environment.set('City', City)\r",
+							"\r",
+							"var Country = pm.variables.replaceIn('{{$randomCountry}}')\r",
+							"\r",
+							"console.log(Country)\r",
+							"pm.environment.set('Country', Country)\r",
+							"\r",
+							"var Mobile = pm.variables.replaceIn('{{$randomPhoneNumber}}')\r",
+							"\r",
+							"console.log(Mobile)\r",
+							"pm.environment.set('Mobile', Mobile)\r",
+							"\r",
+							"var Mobile = pm.variables.replaceIn('{{$randomPhoneNumber}}')\r",
+							"\r",
+							"console.log(Mobile)\r",
+							"pm.environment.set('Mobile', Mobile)\r",
+							"\r",
+							"var Std_Code = pm.variables.replaceIn('{{$randomCountryCode}}')\r",
+							"\r",
+							"console.log(Std_Code)\r",
+							"pm.environment.set('Std_Code', Std_Code)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"Permanent_Address\": { \r\n\"House_Number\": \"{{House_Number}}\",\r\n\"City\": \"{{City}}\",\r\n \"State\": \"sample string 3\", \r\n\"Country\": \"{{Country}}\",\r\n\"PhoneNumber\": [ \r\n{ \r\n\"Std_Code\": \"{{Std_Code}}\",\r\n\"Home\": \"sample string 2\",\r\n \"Mobile\": \"{{Mobile}}\" \r\n},\r\n{ \r\n\"Std_Code\": \"sample string 1\",\r\n\"Home\": \"sample string 2\", \r\n\"Mobile\": \"sample string 3\" \r\n} \r\n] \r\n},\r\n\"stId\": {{id}} \r\n} \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/addresses",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FINAL_STUDENT_DETAILS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var statusCode = pm.response.code\r",
+							"console.log(statusCode)\r",
+							"\r",
+							"switch(statusCode){\r",
+							"\r",
+							"    case 200:\r",
+							"\r",
+							"            var jsonData = pm.response.json()\r",
+							"\r",
+							"            pm.test(\"Status code is 200\", function () {\r",
+							"                pm.response.to.have.status(200);\r",
+							"            });\r",
+							"            \r",
+							"            pm.test('language Field Value Validation', function(){\r",
+							"\r",
+							"                pm.expect(jsonData.data.TechnicalDetails[0].language[0]).to.equal(pm.environment.get('language'));\r",
+							"            })\r",
+							"\r",
+							"            pm.test('Year of Experience Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.TechnicalDetails[0].yearexp).to.eql(pm.environment.get('yearofexp'))\r",
+							"            })\r",
+							"\r",
+							"            pm.test('House Number Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.Address[0].Permanent_Address.House_Number).to.eql(pm.environment.get('House_Number'))\r",
+							"            })\r",
+							"\r",
+							"            pm.test('City Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.Address[0].Permanent_Address.City).to.eql(pm.environment.get('City'))\r",
+							"            })\r",
+							"            \r",
+							"            pm.test('Country Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.Address[0].Permanent_Address.Country).to.eql(pm.environment.get('Country'))\r",
+							"            })\r",
+							"            \r",
+							"            pm.test('Mobile Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.Address[0].Permanent_Address.PhoneNumber[0].Mobile).to.eql(pm.environment.get('Mobile'))\r",
+							"            })\r",
+							"            pm.test('Current Address Field Value Validation', function(){\r",
+							"                pm.expect(jsonData.data.Address[0].Current_Address).to.eql(null)\r",
+							"            })\r",
+							"        break;\r",
+							"\r",
+							"    case 404:\r",
+							"        pm.test('Not Found')\r",
+							"        break;\r",
+							"    case 500:\r",
+							"        pm.test('Internal Server Error')  \r",
+							"        break;  \r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/FinalStudentDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"FinalStudentDetails",
+						"{{id}}"
+					]
+				},
+				"description": "{  \n\"status\": \"true\",  \n\"data\": {  \n\"first_name\": \"Lindsay\",  \n\"middle_name\": \"Jeromy\",  \n\"last_name\": \"Stroman\",  \n\"date_of_birth\": \"Sun Nov 12 2023 07:13:02 GMT+0600 (Bangladesh Standard Time)\",  \n\"TechnicalDetails\": \\[  \n{  \n\"id\": 792286,  \n\"language\": \\[  \n\"ky\",  \n\"nb\"  \n\\],  \n\"yearexp\": \"78\",  \n\"lastused\": \"sample string 3\",  \n\"st_id\": \"10093928\"  \n}  \n\\],  \n\"Address\": \\[  \n{  \n\"Permanent_Address\": {  \n\"House_Number\": \"356\",  \n\"City\": \"Sigurdmouth\",  \n\"State\": \"sample string 3\",  \n\"Country\": \"New Caledonia\",  \n\"PhoneNumber\": \\[  \n{  \n\"Std_Code\": \"MW\",  \n\"Home\": \"sample string 2\",  \n\"Mobile\": \"836-348-6262\"  \n},  \n{  \n\"Std_Code\": \"sample string 1\",  \n\"Home\": \"sample string 2\",  \n\"Mobile\": \"sample string 3\"  \n}  \n\\]  \n},  \n\"Current_Address\": null,  \n\"stId\": \"10093928\"  \n}  \n\\]  \n}  \n}"
+			},
+			"response": []
+		}
+	]
+}
